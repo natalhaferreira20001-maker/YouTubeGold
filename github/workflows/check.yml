@@ -1,0 +1,16 @@
+name: Check YouTube Gold
+
+on:
+push:
+workflow_dispatch:
+
+jobs:
+check:
+runs-on: ubuntu-latest
+steps:
+- uses: actions/checkout@v4
+- name: Verify project files
+run: |
+test -f index.html
+test -f README.md
+echo "YouTube Gold files found"
