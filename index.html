@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YouTube Gold — Protótipo</title>
+<style>
+:root{--bg:#0b0b0d;--panel:#17171b;--red:#ff3030;--text:#f7f7f8;--muted:#aaaab2;--focus:#fff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top right,#311014 0,transparent 42%),var(--bg);color:var(--text);font:18px Arial,Helvetica,sans-serif}
+header{display:flex;align-items:center;justify-content:space-between;padding:22px 4vw;border-bottom:1px solid #29292e}
+.brand{font-size:clamp(24px,3vw,38px);font-weight:800;letter-spacing:.4px}.brand span{color:var(--red)}
+.badge{color:var(--muted);font-size:14px}
+main{padding:28px 4vw 50px;max-width:1500px;margin:auto}
+nav{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px}
+button,input{font:inherit}button{background:#202025;color:var(--text);border:1px solid #38383f;border-radius:10px;padding:14px 20px;cursor:pointer}
+button.active,button:focus,input:focus{outline:3px solid var(--red);outline-offset:2px}button.active{background:var(--red);border-color:var(--red)}
+h1{font-size:clamp(26px,3vw,40px);margin:12px 0}p{color:var(--muted);line-height:1.5}
+.searchrow{display:flex;gap:12px;max-width:900px;margin:18px 0 28px}
+input{flex:1;min-width:0;background:#19191e;color:white;border:1px solid #3b3b42;border-radius:10px;padding:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px}
+.card{background:var(--panel);border:1px solid #2c2c32;border-radius:14px;padding:18px;min-height:150px}
+.card .icon{font-size:28px}.card h3{margin:10px 0}.card p{font-size:15px}
+.panel{background:rgba(23,23,27,.94);border:1px solid #2d2d33;border-radius:16px;padding:24px}
+.hidden{display:none!important}.small{font-size:13px;color:var(--muted)}footer{padding:18px 4vw;color:#888894;border-top:1px solid #29292e;font-size:13px}
+a{color:#ff7777} .row{display:flex;gap:10px;flex-wrap:wrap}
+@media(max-width:650px){header{align-items:flex-start;gap:10px;flex-direction:column}.searchrow{flex-direction:column}.searchrow button{width:100%}}
+</style>
+</head>
+<body>
+<header><div class="brand">YouTube <span>GOLD</span></div><div class="badge">PROTÓTIPO • INTERFACE LEVE</div></header>
+<main>
+<nav aria-label="Menu principal">
+<button class="active" data-page="home">⌂ Início</button>
+<button data-page="search">⌕ Pesquisar</button>
+<button data-page="favorites">★ Favoritos</button>
+<button data-page="history">◷ Histórico</button>
+<button data-page="settings">⚙ Configurações</button>
+</nav>
+<section id="home" class="page">
+<h1>Seu entretenimento, do seu jeito.</h1>
+<p>Interface experimental para TV, com botões grandes e navegação por teclado/controle compatível.</p>
+<div class="grid">
+<div class="card"><div class="icon">🎬</div><h3>Pesquisar vídeos</h3><p>Procure vídeos no YouTube pelo navegador.</p><button data-go="search">Abrir pesquisa</button></div>
+<div class="card"><div class="icon">★</div><h3>Favoritos</h3><p>Guarde links localmente neste navegador.</p><button data-go="favorites">Ver favoritos</button></div>
+<div class="card"><div class="icon">◷</div><h3>Histórico</h3><p>Veja links abertos por este protótipo.</p><button data-go="history">Ver histórico</button></div>
+</div>
+<div class="panel" style="margin-top:20px"><strong>Nota sobre compatibilidade</strong><p>Esta é uma demonstração web, não um aplicativo PS4 instalado. Reprodução incorporada, login, suporte ao DualShock 4 e geração do PKG exigem implementação e testes separados.</p></div>
+</section>
+<section id="search" class="page hidden">
+<h1>Pesquisar no YouTube</h1><p>Digite um termo e abra os resultados no YouTube.</p>
+<form id="searchForm" class="searchrow"><input id="query" placeholder="Ex.: música, jogos, tutoriais..." autocomplete="off"><button type="submit">Pesquisar ↗</button></form>
+<div class="small">A pesquisa abre o site oficial do YouTube em outra página/aba, conforme o navegador.</div>
+</section>
+<section id="favorites" class="page hidden"><h1>Favoritos</h1><p>Adicione links de vídeos para guardar nesta instalação do protótipo.</p>
+<form id="favForm" class="searchrow"><input id="favUrl" placeholder="Cole o link de um vídeo do YouTube"><button type="submit">Salvar favorito</button></form><div id="favList" class="grid"></div>
+</section>
+<section id="history" class="page hidden"><h1>Histórico</h1><p>Links abertos pelo protótipo ficam salvos localmente neste navegador.</p><div class="row"><button id="clearHistory">Limpar histórico</button></div><div id="historyList" class="grid"></div></section>
+<section id="settings" class="page hidden"><h1>Configurações</h1><div class="panel"><h3>Desempenho</h3><p>Interface sem bibliotecas externas, animações pesadas ou imagens remotas.</p><h3>Privacidade</h3><p>Favoritos e histórico deste protótipo ficam no armazenamento local do navegador deste dispositivo.</p><h3>AdBlock</h3><p>Este protótipo não implementa bloqueio de anúncios. Filtros de páginas não garantem bloqueio de anúncios dentro dos vídeos do YouTube.</p><h3>Próxima etapa</h3><p>Validar a arquitetura de reprodução e a toolchain do PS4 antes de prometer um PKG funcional.</p><button id="clearAll">Apagar favoritos e histórico</button></div></section>
+</main>
+<footer>YouTube Gold • Protótipo de interface não oficial • Não afiliado ao YouTube ou à Sony.</footer>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const get=(k)=>{try{return JSON.parse(localStorage.getItem(k)||'[]')}catch{return []}};
+const put=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+function go(page){$$('.page').forEach(x=>x.classList.toggle('hidden',x.id!==page));$$('nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===page));if(page==='favorites')render('favorites');if(page==='history')render('history');const first=$('#'+page+' button, #'+page+' input');if(first)first.focus();}
+$$('nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
+$$('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+function validYouTube(u){try{let x=new URL(u);return ['youtube.com','www.youtube.com','m.youtube.com','youtu.be','www.youtu.be'].includes(x.hostname)}catch{return false}}
+function tile(item,type){let d=document.createElement('div');d.className='card';let title=document.createElement('h3');title.textContent=item.title||item.url;let link=document.createElement('a');link.href=item.url;link.target='_blank';link.rel='noopener';link.textContent='Abrir vídeo ↗';link.addEventListener('click',()=>{let h=get('history');h.unshift({title:item.title||item.url,url:item.url});put('history',h.slice(0,100));});d.append(title,link);if(type==='favorites'){let del=document.createElement('button');del.textContent='Remover';del.style.marginLeft='10px';del.onclick=()=>{put('favorites',get('favorites').filter(x=>x.url!==item.url));render(type)};d.append(del)}return d}
+function render(type){let el=type==='favorites'?$('#favList'):$('#historyList');el.replaceChildren();let items=get(type);if(!items.length){let p=document.createElement('p');p.textContent=type==='favorites'?'Nenhum favorito salvo ainda.':'Nenhum vídeo no histórico ainda.';el.append(p);return}items.forEach(i=>el.append(tile(i,type)))}
+$('#searchForm').addEventListener('submit',e=>{e.preventDefault();let q=$('#query').value.trim();if(q)window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(q),'_blank','noopener')});
+$('#favForm').addEventListener('submit',e=>{e.preventDefault();let url=$('#favUrl').value.trim();if(!validYouTube(url)){alert('Informe um link válido do YouTube.');return}let a=get('favorites');if(!a.some(x=>x.url===url))a.unshift({title:url,url});put('favorites',a);$('#favUrl').value='';render('favorites')});
+$('#clearHistory').onclick=()=>{if(confirm('Limpar todo o histórico?')){put('history',[]);render('history')}};
+$('#clearAll').onclick=()=>{if(confirm('Apagar favoritos e histórico deste navegador?')){put('favorites',[]);put('history',[]);alert('Dados locais apagados.')}};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){go('home');return}if(['ArrowRight','ArrowLeft','ArrowUp','ArrowDown'].includes(e.key)){let els=$$('button:not(.hidden), input').filter(x=>x.offsetParent!==null);let i=els.indexOf(document.activeElement);if(i>=0){e.preventDefault();let step=(e.key==='ArrowRight'||e.key==='ArrowDown')?1:-1;els[(i+step+els.length)%els.length].focus()}}});
+</script>
+</body></html>
